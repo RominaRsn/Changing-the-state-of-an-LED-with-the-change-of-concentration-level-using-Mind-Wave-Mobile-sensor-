@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+</script>
+</head>
+
+
+<body>
+
+<script type=text/javascript>
+    SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+setInterval(myMethod, 1000);
+
+function myMethod( )
+{
+      $.getJSON(SCRIPT_ROOT + '/_ref', {}, function(data) {
+        //$("#result2").text(data.myresult);
+        var obb=data.myresult;
+        var values=obb["values"];
+        var times=obb["timestamps"];
+       $("#nodeName1").text(obb["sensorName"]);
+       $("#sensorName1").text(obb["sensorType"]);
+       
+var str1="<table><tr><th>Value</th><th>Time</th></tr>";
+
+
+for (var i=0;i<values.length;i++){
+        str1+="<tr><td> "+values[i]+"</td>"+"<td> "+times[i]+"</td></tr>";
+       }
+
+    str1+="</table>";
+    document.getElementById("value1").innerHTML=str1;
+      });
+}
+
+</script>
+
+<h1>Sensor Values</h1>
+
+<table style="width:100%">
+  <tr>
+    <th>Node Name</th>
+    <th>Sensor Type</th> 
+    <th>Values</th>
+  </tr>
+  <tr>
+ <td><span id="nodeName1"/></td>
+ <td><span  id="sensorName1"/></td>
+  <td><span id="value1"/></td>
+  </tr>
+  
+</table>
+
+
+</body>
+</html>
